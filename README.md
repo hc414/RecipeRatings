@@ -1,5 +1,6 @@
 # Recipe Ratings
 This is the repository for DSC80's final project at UCSD
+
 By Howard Chen (hyc004@ucsd.edu), Jialin Wu (jih101@ucsd.edu)
 
 ---
