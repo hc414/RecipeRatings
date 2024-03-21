@@ -42,8 +42,24 @@ The first 5 rows of our cleaned DataFrame is showed below:
 | 412 broccoli casserole               | 306168 |        40 |            50969 | 2008-05-30 00:00:00 | ['60-minutes-or-less', 'time-to-make', 'course', 'main-ingredient', 'preparation', 'side-dishes', 'vegetables', 'easy', 'beginner-cook', 'broccoli']                                                                        |         6 | ['preheat oven to 350 degrees', 'spray a 2 quart baking dish with cooking spray , set aside', 'in a large bowl mix together broccoli , soup , one cup of cheese , garlic powder , pepper , salt , milk , 1 cup of french onions , and soy sauce', 'pour into baking dish , sprinkle remaining cheese over top', 'bake for 25 minutes or until cheese is lightly browned', 'sprinkle with rest of french fried onions and bake until onions are browned and cheese is bubbly , about 10 more minutes']                                                                                                                                                                                                                                                                                                                              | since there are already 411 recipes for broccoli casserole posted to "zaar" ,i decided to call this one  #412 broccoli casserole.i don't think there are any like this one in the database. i based this one on the famous "green bean casserole" from campbell's soup. but i think mine is better since i don't like cream of mushroom soup.submitted to "zaar" on may 28th,2008 | ['frozen broccoli cuts', 'cream of chicken soup', 'sharp cheddar cheese', 'garlic powder', 'ground black pepper', 'salt', 'milk', 'soy sauce', 'french-fried onions']          |               9 |    768828 |      306168 | 2013-08-02 00:00:00 |        5 | Loved this.  Be sure to completely thaw the broccoli.  I didn&#039;t and it didn&#039;t get done in time specified.  Just cooked it a little longer though and it was perfect.  Thanks Chef.                                                                                                                                                     |                   5 |      194.8 |          20 |       6 |       32 |        22 |        36 |       3 |
 
 ### Univariate Analysis
+<iframe
+  src="assets/univariate.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+In the histogram above, we see the distribution of ratings for each interaction in our merged DataFrame. On the X-axis, we have the ratings (ranging from 1-5) and on the Y-axis we have the number of interactions that gave that specific rating. We can observe that the histogram is heavily left-skewed, meaning that of the people who decided to leave an interactions, most gave a rating of 5.
 
 ### Bivariate Analysis
+<iframe
+  src="assets/bivariate_rating_vs_prep.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+The scatterplot above allows us to vizualize the relationship between a recipe's ratings and its preperation time. We see that most points land in the left most fifth of the graph grid, however this does not mean that all of those recipes have short preperation times. We'd like to emphasize the range of the X-axis, which, in this case, is in minutes, yet we see that the right most label on the X-axis is 1M. This is due to our data set having an outlier in terms of preperation time, having a time of 1051200 minutes and a recipe title of "how to preserve a husband". We can still see, if we zoom in, that most interactions are made on recipes that requires less than 1000 minutes to prepare.
 
 ### Interesting Aggregates
 ---
