@@ -73,6 +73,7 @@ The scatterplot above allows us to vizualize the relationship between a recipe's
 
 
 In the grouped table above, we were able to group interactions by their ratings and we see that lower ratings (1-2) have, on average, more steps in the recipe than those with higher ratings. However, we remain cautious when considering whether this difference in steps is significant due to the difference in sizes of each rating group.
+
 ---
 ## Assessment of Missingness
 
