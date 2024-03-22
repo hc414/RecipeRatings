@@ -62,12 +62,63 @@ In the histogram above, we see the distribution of ratings for each interaction 
 The scatterplot above allows us to vizualize the relationship between a recipe's ratings and its preperation time. We see that most points land in the left most fifth of the graph grid, however this does not mean that all of those recipes have short preperation times. We'd like to emphasize the range of the X-axis, which, in this case, is in minutes, yet we see that the right most label on the X-axis is 1M. This is due to our data set having an outlier in terms of preperation time, having a time of 1051200 minutes and a recipe title of "how to preserve a husband". We can still see, if we zoom in, that most interactions are made on recipes that requires less than 1000 minutes to prepare.
 
 ### Interesting Aggregates
+
+|   rating |     mean |   size |
+|---------:|---------:|-------:|
+|        1 | 10.63    |   2870 |
+|        2 | 10.6976  |   2368 |
+|        3 |  9.99205 |   7172 |
+|        4 |  9.57743 |  37307 |
+|        5 |  9.9849  | 169676 |
+
+
+In the grouped table above, we were able to group interactions by their ratings and we see that lower ratings (1-2) have, on average, more steps in the recipe than those with higher ratings. However, we remain cautious when considering whether this difference in steps is significant due to the difference in sizes of each rating group.
 ---
 ## Assessment of Missingness
 
 ### NMAR Analysis
+We believe that in our DataFrame, the column that most resembles a missingness of NMAR is `description`. Missing values in `description` might be because of the rarity of its necessary ingredients. If all ingredients are common for a specifc recipe, it would likely not have a description as there are nothing to elaborate upon. On the other hand, if a recipe requires a rare ingredient, `description` would likely be filled with some information about how and where to find said ingredient(s) also some reminders if needed. So, to make `description`'s missingness MAR, we can add a column with boolean values that uses TF-IDF to find whether a recipe involves a rare ingredient.
 
 ### Missingness Dependency
+
+We first test the missingness dependency of the `minutes` column and `rating` column.
+
+Null: Distribution of `minutes` when `rating` is missing is the same as the distribution when `rating` is not missing.
+
+Alternative: Distribution of `minutes` when `rating` is missing is different from the distribution when `rating` is not missing.
+
+Significance value: 0.05
+
+We will conduct a permutation test with 5000 iterations, shuffling the `rating` column, and will be looking at the absolute difference in mean minutes for these two distributions.
+
+<iframe
+  src="assets/minutes_vs_rating.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+From the histogram above with an extra line representing the observed difference, we can see that the observed difference lies between a good amount of data points. This means that from our permutation test, we found times where the absolute differece is greater than the observed. To verify this, we calculated the p-value, which came out to be 0.1188 which is higher than the 0.05 significance value we plan to use, therefore we fail to reject the null hypothesis, so we say the distributions are the same and missingness in `rating` does not depend on `minutes`.
+
+Next, we will test the missingness dependency of the `n_steps` columns and `rating` column.
+
+Null: Distribution of `n_steps` when `rating` is missing is the same as the distribution when `rating` is not missing.
+
+Alternative: Distribution of `n_steps` when `rating` is missing is different from the distribution when `rating` is not missing.
+
+Significance value: 0.05
+
+We will conduct a permutation test with 5000 iterations, shuffling the `rating` column, and will be looking at the absolute difference in mean n_steps for these two distributions.
+
+<iframe
+  src="assets/n_steps_vs_rating.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+Unlike `minutes`, we see that the observed difference line lies all the way to the right, with no points beyond it, which means that in our 5000 permutations, we did not see a single instance where the absolute difference for the sample is greater than the observed difference. In other words, we can say it is very likely that missingness in `rating` does depend on `n_steps`. To verify this, we calculated the p-value which was 0.0, which is less than 0.05, so we can reject our null hypothesis concluding that the distributions are different.
+
 ---
 ## Hypothesis Testing
 
