@@ -95,7 +95,7 @@ Significance value: 0.05
 We will conduct a permutation test with 5000 iterations, shuffling the `rating` column, and will be looking at the absolute difference in mean minutes for these two distributions.
 
 <iframe
-  src="assets/minutes_vs_rating.html"
+  src="assets/3-1.html"
   width="800"
   height="600"
   frameborder="0"
@@ -116,7 +116,7 @@ Significance value: 0.05
 We will conduct a permutation test with 5000 iterations, shuffling the `rating` column, and will be looking at the absolute difference in mean n_steps for these two distributions.
 
 <iframe
-  src="assets/n_steps_vs_rating.html"
+  src="assets/3-2.html"
   width="800"
   height="600"
   frameborder="0"
@@ -142,7 +142,7 @@ Test statistic: mean rating for recipes with rare ingredient(s) - mean rating fo
 Significance value: 0.05
 
 <iframe
-  src="assets/hypothesis.html"
+  src="assets/4-1.html"
   width="800"
   height="600"
   frameborder="0"
