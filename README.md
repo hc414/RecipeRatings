@@ -153,15 +153,33 @@ From our test, we ended up with a p-value of 1.0 which is higher than our signif
 ## Prediction Problem
 
 ### Problem Identification
-We will be using 5 columns, specifically `minutes`, `n_steps`, `n_ingredients`, `rating`, `has_rare_ingredient`, to create a regression that predicts `rating`. We decided to choose `rating` as the response variable as we believe that it best summarizes an interaction. For the metrics that we will use to assess our model, we decided to use root mean squared error (RMSE) and the model's accuracy (R^2). The use of both accuracy and RMSE over other metrics like F-1 score is because our model will be a regression rather than a classification, hence RMSE and accuracy will give us a more complete understanding of our model's predicting performance.
+We will be using 4 columns, specifically `minutes`, `sugar`, `has_rare_ingredient`, to create a regression that predicts `calories`. We decided to choose `calories` as the response variable as we believe that it best summarizes a recipe. For the metrics that we will use to assess our model, we decided to use root mean squared error (RMSE) and the model's accuracy (R^2). The use of both accuracy and RMSE over other metrics like F-1 score is because our model will be a regression rather than a classification, hence RMSE and accuracy will give us a more complete understanding of our model's predicting performance.
 
 ---
 ## Baseline Model
-
+Our model is a regression that uses `minutes`, `sugar`, and `has_rare_ingredient` to ultimately predict `calories`. Values in `minutes` (time needed to follow the recipe), and `sugar` (percent daily value) are quantitative while `has_rare_ingredient` is a nominal (boolean) column. To encode these columns, we created a `ColumnTransformer` that takes in the quantitative columns and standardizes them using `StandardScaler()` and we also one-hot encoded `has_rare_ingredients`. Overall, we believe that our model is mediocre at predicting `calories`, with our RMSE for our training set being slightly lower than the RMSE for the testing set (419.13, 435.67 respectively), not overfitting, while maintaining an accuracy of 0.417.
 
 ---
 ## Final Model
+To improve upon our baseline model, we decided to add 3 more features. For `carbs`, we will split it into 3 categories low, med, high, and one-hot encode that. For `n_steps`, we decided to binarize this using `Binarizer()` setting a threshold of 9 as we found out that around half of the recipes in our dataset has less than 9 steps. We also decided to add `protein` to our `StandardScaler()`. We know that there's likely a very high correlation between `total_fat`, `sat_fat`, and `calories`, which is why we decided to avoid these columns as we want to assess other columns' effects on predictions. Our new and improved model's has a lower RMSE for both training and testing sets (290.84, 312.23 respectively) which is around 100 less than our baseline model while its accuracy/score improved to 0.700. We also added `PolynomialFeatures(d)` to our pipeline and we tried different (hyper)parameters for `d`, also known as the degree of the polynomial and from the graph below, found that a degree of 3 is our optimal hyperparameter.
+
+<iframe
+  src="assets/hyperparameter.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
 
 ---
 ## Fairness Analysis
+The two groups we decided to test fairness on are recipes that includes rare ingredients and recipes that don't.
 
+Null Hypothesis: Our model is fair. Its precision for recipes including rare ingredients and recipes not including rare ingredients are roughly the same, and any differences are due to random chance.
+
+Alternative Hypothesis: Our model is unfair. Its precision for recipes including rare ingredients than its precision for recipes not including rare ingredients.
+
+Test Statistic: RMSE
+
+Significance Value: 0.05
+
+We conducted a permutation test, permutating the `has_rare_ingredient` column and compared the distribution of the permutated sample with the original distribution by using RMSE. We ended up with a p-value of 0.85 which is higher than the significance value of 0.05, hence we fail to reject our null hypothesis, therefore we can say that our model is fair.
