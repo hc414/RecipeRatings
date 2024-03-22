@@ -85,7 +85,9 @@ We first test the missingness dependency of the `minutes` column and `rating` co
 
 Null: Distribution of `minutes` when `rating` is missing is the same as the distribution when `rating` is not missing.
 
+
 Alternative: Distribution of `minutes` when `rating` is missing is different from the distribution when `rating` is not missing.
+
 
 Significance value: 0.05
 
@@ -104,7 +106,9 @@ Next, we will test the missingness dependency of the `n_steps` columns and `rati
 
 Null: Distribution of `n_steps` when `rating` is missing is the same as the distribution when `rating` is not missing.
 
+
 Alternative: Distribution of `n_steps` when `rating` is missing is different from the distribution when `rating` is not missing.
+
 
 Significance value: 0.05
 
@@ -122,12 +126,38 @@ Unlike `minutes`, we see that the observed difference line lies all the way to t
 ---
 ## Hypothesis Testing
 
+Next up, we will be conducting a hypothesis test to find whether recipes with rare ingredient(s) have lower ratings than those with only common ingredient(s). We created a function that gives us a list of the top 30 most common ingredients (using TF-IDF) in a list from the dataset and we added a new column `has_rare_ingredient` with boolean values, True if it contains ingredients not in the top 30, False otherwise. 
+
+
+Null Hypothesis: Recipes that include rare ingredient(s) have the same mean ratings than those with common ingredient(s)
+
+
+Alternative Hypothesis: Recipes that include rare ingredient(s) have lower mean ratings than those with common ingredient(s)
+
+
+Test statistic: mean rating for recipes with rare ingredient(s) - mean rating for recipes without rare ingredient(s)
+
+
+Significance value: 0.05
+
+<iframe
+  src="assets/hypothesis.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+From our test, we ended up with a p-value of 1.0 which is higher than our significance level of 0.05, which means that we don't have sufficient evidence to reject the null hypothesis, therefore we can conclude that recipes with rare ingredient(s) tend to have the same ratings than those without.
+
 ---
-## Prediction Problem -
+## Prediction Problem
 
 ### Problem Identification
+We will be using 5 columns, specifically `minutes`, `n_steps`, `n_ingredients`, `rating`, `has_rare_ingredient`, to create a regression that predicts `rating`. We decided to choose `rating` as the response variable as we believe that it best summarizes an interaction. For the metrics that we will use to assess our model, we decided to use root mean squared error (RMSE) and the model's accuracy (R^2). The use of both accuracy and RMSE over other metrics like F-1 score is because our model will be a regression rather than a classification, hence RMSE and accuracy will give us a more complete understanding of our model's predicting performance.
+
 ---
 ## Baseline Model
+
 
 ---
 ## Final Model
